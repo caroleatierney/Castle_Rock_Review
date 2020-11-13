@@ -1,5 +1,9 @@
 /* used % to make responsive */
 
+* {
+  /* border: 1px solid gold; */
+}
+
 html, body {
   /* background-color: #991728; */
   background-color: black;
@@ -33,14 +37,14 @@ html, body {
 .header {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-evenly;
   height: 20%;
-  margin-bottom: 2%;
 }
 
 .header > img {
-  max-width: 45%;
-  height: 100%;
+  width: 18%;
+  height: 18%;
   border-radius: 5%;
 }
 
@@ -61,7 +65,6 @@ html, body {
   justify-content: center;
   align-items: center;
   height: 30%;
-  /* background-color: pink; used for debugging css*/
 }
 
 .book-covers {
@@ -103,16 +106,14 @@ html, body {
   justify-content: center;
   width: 100%;
   height: 8%;
-  /* background-color: bisque; used for testing css */
 }
 
 .button {
-  background-color: red;
+  background-color: transparent;
   padding: 2% 2%;
-  color: white;
+  color: red;
   margin-left: 13%;
-  font-size: 20px;
-  border-color: white;
+  font-size: 100px;
 }
 
 /* ===== form container ====== */
@@ -127,18 +128,89 @@ form {
 
 /* ===== results container ====== */
 .query-data {
-height: 45%;
-display: flex;
-justify-content: center;
-align-items: center;
-display: inline-block;
-width: 100%
+  display: flex;
+  flex-direction: column;
+  flex-flow: row wrap;
+  align-content: space-between;
+  justify-content: space-between;
+  /* justify-content: center; */
 }
+
+/* this div is defined in the app and appended to the query-data folder */
+.bookList {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  color: white;
+  font-size: 80px;
+  width: 500px;
+  margin: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  border: 5px solid white;
+}
+
+/* ======================================= */
+/* book modal handling referenced pair.com */
+.popup-body {
+  visibility:hidden;
+}
+.popup-content {
+  visibility: hidden;
+}
+.popup-body.active {
+  visibility:visible;
+}
+.popup-content.active {
+  visibility: visible;
+}
+
+.open {
+  background-color: #d0beba;
+}
+/* ======================================= */
+
+img {
+  width: 500px;
+  height: 800px;
+}
+
+.popup-body {
+  /* display: none; */
+  /* background-color: gray; */
+  /* position: fixed; */
+  /* top: 0; */
+  /* left: 0; */
+  /* height: 100%; */
+  /* width: 100%; */
+  /* z-index: 1; */
+  /* overflow: auto; */
+  /* border: 10px solid red; */
+
+ visibility: hidden;
+ position: absolute;
+ background: #ffffff;
+ border: 3px solid #666666;
+ width: 50%;
+ height: 50%;
+ left: 25%;
+}
+
+.popup-body.active {
+  /*displays pop-up when "active" class is present*/
+  visibility: visible;
+  text-align: center;
+}
+
+
 
 p {
   color: red;
   text-align: center;
   font-size: 80px;
+  border: 1px solid blue;
 }
 
 /* ===== footer container ====== */
@@ -154,6 +226,3 @@ p {
   height: auto;
   width: 100;
 }
-
-/* ===================================== */
-/* code grave yard */

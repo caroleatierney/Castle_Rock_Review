@@ -4,10 +4,11 @@ let author="Stephen King";
 let urlPath = "https://www.googleapis.com/books/v1/volumes?q=inauthor:Stephen King&key=AIzaSyB AZFHPTcUSvMx_Gx5Cd5tcQLP2c72htwA";
 let queryData=('$.query-data');
 
+// const $details = $('<p>');
+
 // create a results query of books
 let results=[];
-let kingBook=[];
-
+// let kingBook=[];
 
 class Book {
   constructor(title, thumbnail, description, pageCount, maturityRating, fanRating, year) {
@@ -39,10 +40,31 @@ $(() => {
     $('.button').on('click', event => {
       event.preventDefault();
 
-      // initialize array to empty to reset it each time
-      results = results.slice(results.length)
+      // remove list from display and reset array
+      // console.log($.queryData[0]);
+      // $('.details').remove();
+      // $('.query-data').remove();
+      // $div.main.container.removeClass(queryData);
+      // $p.removeClass('.query-data');
+      // $(queryData).remove();
+      // $('.query-data').remove();
+      // $('.details').remove();
 
-      // display book objects
+      // **************************************************** //
+      // initialize array to empty to reset it each time
+      // or just clear the details in the dom!
+      // p.remove()
+      // console.log($.queryData[0]);
+      // $('details').remove();
+      results = results.slice(results.length)
+      // **************************************************** //
+
+
+      // console.log("dom", document.querySelectorAll('.details'))
+
+
+
+      // display book objects //
       // console.log(results);
 
       // grab the query category ID chosen and save in query
@@ -76,21 +98,39 @@ $(() => {
         // pull year out of published date
         let year = (data.items[i].volumeInfo.publishedDate).slice(0,4);
 
-        kingBook = new Book(title, thumbnail, description, pageCount, maturityRating, fanRating, year)
+        let kingBook = new Book(title, pageCount, thumbnail, description, maturityRating, fanRating, year)
 
         results.push(kingBook);
 
+        // console.log(thumbnail);
+
+        // console.log(results[0].thumbnail);
+
+        // set a click event on the book div just appended
+        // bookDiv.on("click", clickedBook)
+
+        // append data to display
+        // const $details = $('<p>');
+
+        // $('.query-data').append($details);
         // console.log(query.data);
+
         // console.log(data.items[i].volumeInfo.imageLinks.thumbnail);
         // console.log(data.items[i].volumeInfo.description);
 
       }; // end if King
+
+      // console.log("image", results[1].thumbnail);
+
     };  // end for
 
     // ========== sort & display results based on button chosen ===========
 
-    // clear the div before adding
+    // clear the div
      $('.query-data').empty()
+
+    // clickedBook = (event) => {
+
 
       if (query === "sorted-by-year") {
         // sort by year, title
@@ -101,24 +141,62 @@ $(() => {
         for (var i = 0; i < results.length; i++) {
 
           // populate the bookList div
-          const bookList = $(`<div class='bookList ' id='${i}'>`);
-          const bookButton= $(`<button class="open">Open</button>`);
-
+          // const bookList = $('<div class="bookList">')
           title=results[i].title;
           fanRating=results[i].fanRating;
           year=results[i].year;
           thumbnail=results[i].thumbnail;
           description = results[i].description;
 
-          bookImage=$('<img>').attr('src', thumbnail);
+          bookImage=$('<img>').attr('src', thumbnail)
 
-          // append booklist div to query-data container
-          bookList.append(title);
+          // Update bookList with data
+          // create divs to append to query-data container
+          const bookList = $(`<div class='bookInfo' id='${i}'>`);
+
+          // bookList.attr('id', i)
+          // bookList.append(title);
           bookList.append(bookImage);
-          bookList.append(bookButton);
-          $('.query-data').append(bookList);
+          // bookList.append(year);
+
+          $bookList=bookList;
+          // bookList.append(bookImage);
+          // const $bookList=bookList;
+          $('.query-data').append($bookList);
+
+
+          // const $title = $('<p>');
+          // $title.text(title)
+          // $(".query-data").append(bookDiv);
+          // $(".query-data").append(title);
+          // $(".query-data").append($bookImage);
+
+          // ***************************
+          // console.log(thumbnail);
+          // create a line with Title, Published Year and Rating concatenated
+          // const $details = $('<p>');
+          // $details.text(thumbnail);
+          // $(".query-data").append($details);
+          // $(".query-data").append($bookImageUrl);
+          // add a class to aid in removing
+          // $('query-data').addClass('modals')
+          // $details.text("Title: " + title +  "______Published Year: " + year + "______Average Rating: " + fanRating);
+
+          // append data to display
+          // $('.query-data').append($details);
+
+
+          // $('.modals').append($details);
+
         } // end for
       } // end if
+
+
+
+
+
+
+
 
       if (query === "maturity-rating") {
       // sort by maturity rating, title
@@ -180,71 +258,13 @@ $(() => {
           $('.query-data').append($details);
 
         } // end for
-
     } // end if
 
+  // }  // end clicked event
+
+    $('form').trigger('reset');
+    });  // button function end brackets
   });
-
-  // ==================================================
-  // ================ modal handling ==================
-  // ==================================================
-  $(".open").on("click", function () {
-    $(".popup-body, .popup-content").addClass("active");
-
-    // clear the div before adding
-    $('.popup-content').empty()
-
-    let test=$('<h1>title</h1>')
-    $('.popup-content').append(test);
-
-    let button=$('<button class="close">Close</button>')
-    $('.popup-content').append(button);
-  });
-
-  $(".close, .popup-body").on("click", function () {
-    $(".popup-body, .popup-content").removeClass("active");
-  });
-  // ==================================================
-
-
-    // $('.bookList').on('click', (event) => {
-      // const bookListId = $(event.currentTarget).attr('id')
-
-      // get info from array by id #
-
-      console.log(kingBook);
-
-      // let $titleName = kingBook[0].title;
-      // let $title = $(`<h2>${titleName}</h2>`)
-
-      // let thumbnail = data.items[i].volumeInfo.imageLinks.thumbnail;
-      // let description = data.items[i].volumeInfo.categories.description;
-      // let fanRating = data.items[i].volumeInfo.averageRating;
-      // let maturityRating = data.items[i].volumeInfo.maturityRating;
-      // let pageCount = data.items[i].volumeInfo.pageCount;
-      // let year = (data.items[i].volumeInfo.publishedDate).slice(0,4);
-
-      // const clickedBook = $('moreInfo')
-      // .append($title)
-
-      // $('.moreInfo').toggle()
-    // })
-
-    // $('#close').on('click', () => {
-      // $('.modal').hide()
-      // $('.moreInfo').empty()
-    // })
-
-
-
-
-
-
-    // }  // end clicked event
-
-    // $('form').trigger('reset');
-  });  // modal end brackets
-  // });
 
   // ================= Carousel ===================
 
