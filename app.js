@@ -6,8 +6,6 @@ let queryData=('$.query-data');
 
 // create a results query of books
 let results=[];
-let kingBook=[];
-
 
 class Book {
   constructor(title, thumbnail, description, pageCount, maturityRating, fanRating, year) {
@@ -78,8 +76,13 @@ $(() => {
 
         kingBook = new Book(title, thumbnail, description, pageCount, maturityRating, fanRating, year)
 
+        // *** can I access kingBook array later?
+        // *** why am I not getting more books?
+        // *** why is there so much in line 86
         results.push(kingBook);
 
+        // console.log(results);
+        // console.log(results[0]);
         // console.log(query.data);
         // console.log(data.items[i].volumeInfo.imageLinks.thumbnail);
         // console.log(data.items[i].volumeInfo.description);
@@ -92,96 +95,62 @@ $(() => {
     // clear the div before adding
      $('.query-data').empty()
 
-      if (query === "sorted-by-year") {
-        // sort by year, title
-        // referenced https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
+    // sort results: referenced https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
 
-        results.sort((a,b) => (a.year > b.year) ? 1: -1);
+    // sort by year, title
+    if (query === "sorted-by-year") {
+      results.sort((a,b) => (a.year > b.year) ? 1: -1);
+    // sort by maturity rating, title
+    } else if (query === "maturity-rating") {
+      results.sort((a,b) => (a.maturityRating > b.maturityRating) ? 1: -1);
+    // sort by fan-rating, title
+    } else if (query === "fan-rating") {
+      results.sort((a,b) => (a.fanRating < b.fanRating) ? 1: -1);
+    // sort by number of pages, title
+    } else if (query === "number-pages") {
+      // sort by number of pages
+      results.sort((a,b) => (a.pageCount < b.pageCount) ? 1: -1);
+    }
 
-        for (var i = 0; i < results.length; i++) {
+    // populate book div
+    for (var i = 0; i < results.length; i++) {
+      const bookList = $(`<div class='bookList' id='${i}'>`);
+      const bookButton= $(`<button class="open">Open</button>`);
 
-          // populate the bookList div
-          const bookList = $(`<div class='bookList ' id='${i}'>`);
-          const bookButton= $(`<button class="open">Open</button>`);
+      title=results[i].title;
+      fanRating=results[i].fanRating;
+      year=results[i].year;
+      thumbnail=results[i].thumbnail;
+      description = results[i].description;
 
-          title=results[i].title;
-          fanRating=results[i].fanRating;
-          year=results[i].year;
-          thumbnail=results[i].thumbnail;
-          description = results[i].description;
+      bookImage=$('<img>').attr('src', thumbnail);
 
-          bookImage=$('<img>').attr('src', thumbnail);
+      // append booklist div to query-data container
+      bookList.append(title);
+      bookList.append(bookImage);
+      bookList.append(bookButton);
+      $('.query-data').append(bookList);
+    }
 
-          // append booklist div to query-data container
-          bookList.append(title);
-          bookList.append(bookImage);
-          bookList.append(bookButton);
-          $('.query-data').append(bookList);
-        } // end for
-      } // end if
+    $(".open").on("click", function () {
+      $(".popup-body, .popup-content").addClass("active");
 
-      if (query === "maturity-rating") {
-      // sort by maturity rating, title
+      // console.log(results);
+      // console.log(results[0].title);
 
-        results.sort((a,b) => (a.maturityRating > b.maturityRating) ? 1: -1);
+      // clear the div before adding
+      $('.popup-content').empty()
 
-        for (var i = 0; i < results.length; i++) {
-          title=results[i].title;
-          fanRating=results[i].fanRating;
-          year=results[i].year;
-          maturityRating=results[i].maturityRating;
+      let test=$('<h1>test stuff shows up</h1>')
+      $('.popup-content').append(test);
 
-          // create a line with Title, Published Year and Rating concatenated
-          const $details = $('<p>');
-          $details.text("Title: " + title +  "______Maturity Rating:  " + maturityRating + "______Average Rating: " + fanRating);
+      let button=$('<button class="close">Close</button>')
+      $('.popup-content').append(button);
+    });
 
-          // append data to display
-          $('.query-data').append($details);
-
-        } // end for
-      } // end if
-
-      if (query === "fan-rating") {
-
-        results.sort((a,b) => (a.fanRating < b.fanRating) ? 1: -1);
-
-        for (var i = 0; i < results.length; i++) {
-          title=results[i].title;
-          fanRating=results[i].fanRating;
-          year=results[i].year;
-          maturityRating=results[i].maturityRating;
-
-          // create a line with Title, Published Year and Rating concatenated
-          const $details = $('<p>');
-          // sort by rating
-          $details.text("Title: " + title + "______Average Rating: " + fanRating);
-
-          // append data to display
-          $('.query-data').append($details);
-        } // end for
-      } // end if
-
-      if (query === "number-pages") {
-        // sort by number of pages
-        results.sort((a,b) => (a.pageCount < b.pageCount) ? 1: -1);
-
-        for (var i = 0; i < results.length; i++) {
-          title=results[i].title;
-          fanRating=results[i].fanRating;
-          year=results[i].year;
-          maturityRating=results[i].maturityRating;
-          pageCount=results[i].pageCount;
-
-          // create a line with Title, Published Year and Rating concatenated
-          const $details = $('<p>');
-          $details.text("Title: " + title +  "______Number of Pages:  " + pageCount + "______Average Rating: " + fanRating);
-
-          // append data to display
-          $('.query-data').append($details);
-
-        } // end for
-
-    } // end if
+    $(".close, .popup-body").on("click", function () {
+      $(".popup-body, .popup-content").removeClass("active");
+    });
 
   });
 
@@ -191,10 +160,13 @@ $(() => {
   $(".open").on("click", function () {
     $(".popup-body, .popup-content").addClass("active");
 
+    // console.log(results);
+    // console.log(results[0].title);
+
     // clear the div before adding
     $('.popup-content').empty()
 
-    let test=$('<h1>title</h1>')
+    let test=$('<h1>test stuff shows up</h1>')
     $('.popup-content').append(test);
 
     let button=$('<button class="close">Close</button>')
@@ -206,15 +178,14 @@ $(() => {
   });
   // ==================================================
 
-
     // $('.bookList').on('click', (event) => {
       // const bookListId = $(event.currentTarget).attr('id')
 
       // get info from array by id #
 
-      console.log(kingBook);
+      console.log(results);
 
-      // let $titleName = kingBook[0].title;
+      // let $titleName = results[0].title;
       // let $title = $(`<h2>${titleName}</h2>`)
 
       // let thumbnail = data.items[i].volumeInfo.imageLinks.thumbnail;

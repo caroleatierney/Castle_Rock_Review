@@ -5,7 +5,6 @@
 }
 
 html, body {
-  /* background-color: #991728; */
   background-color: black;
   background-image: url("images/dark_and_misty.png");
   background-repeat: no-repeat;
@@ -106,6 +105,7 @@ html, body {
   justify-content: center;
   width: 100%;
   height: 8%;
+  margin-bottom: 20px;
 }
 
 .button {
@@ -132,7 +132,7 @@ form {
   flex-direction: column;
   flex-flow: row wrap;
   align-content: space-between;
-  justify-content: space-between;
+  justify-content: center;
   /* justify-content: center; */
 }
 
@@ -154,41 +154,15 @@ form {
 
 /* ======================================= */
 /* book modal handling referenced pair.com */
-.popup-body {
-  visibility:hidden;
-}
 .popup-content {
   visibility: hidden;
 }
-.popup-body.active {
-  visibility:visible;
-}
+
 .popup-content.active {
   visibility: visible;
 }
 
-.open {
-  background-color: #d0beba;
-}
-/* ======================================= */
-
-img {
-  width: 500px;
-  height: 800px;
-}
-
 .popup-body {
-  /* display: none; */
-  /* background-color: gray; */
-  /* position: fixed; */
-  /* top: 0; */
-  /* left: 0; */
-  /* height: 100%; */
-  /* width: 100%; */
-  /* z-index: 1; */
-  /* overflow: auto; */
-  /* border: 10px solid red; */
-
  visibility: hidden;
  position: absolute;
  background: #ffffff;
@@ -196,21 +170,32 @@ img {
  width: 50%;
  height: 50%;
  left: 25%;
+ text-align: center;
+ font-size: 50px;
 }
 
 .popup-body.active {
   /*displays pop-up when "active" class is present*/
   visibility: visible;
-  text-align: center;
 }
 
+.open {
+  background-color: blue;
+  width: 150px;
+  height: 150px;
+}
 
+.close {
+  background-color: green;
+  width: 150px;
+  height: 150px;
+}
 
-p {
-  color: red;
-  text-align: center;
-  font-size: 80px;
-  border: 1px solid blue;
+/* ======================================= */
+
+img {
+  width: 500px;
+  height: 800px;
 }
 
 /* ===== footer container ====== */
