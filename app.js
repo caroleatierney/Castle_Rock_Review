@@ -95,6 +95,8 @@ $(() => {
     // clear the div before adding
      $('.query-data').empty()
 
+     console.log(results);
+
     // sort results: referenced https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
 
     // sort by year, title
@@ -114,8 +116,7 @@ $(() => {
 
     // populate book div
     for (var i = 0; i < results.length; i++) {
-      const bookList = $(`<div class='bookList' id='${i}'>`);
-      const bookButton= $(`<button class="open">Open</button>`);
+      const bookList = $(`<div class="bookList" id='${i}'>`);
 
       title=results[i].title;
       fanRating=results[i].fanRating;
@@ -123,15 +124,17 @@ $(() => {
       thumbnail=results[i].thumbnail;
       description = results[i].description;
 
-      bookImage=$('<img>').attr('src', thumbnail);
+      bookImage=$(`<img class='open book'>`).attr('src', thumbnail);
 
       // append booklist div to query-data container
       bookList.append(title);
       bookList.append(bookImage);
-      bookList.append(bookButton);
       $('.query-data').append(bookList);
     }
 
+    // ==================================================
+    // ================ modal handling ==================
+    // ==================================================
     $(".open").on("click", function () {
       $(".popup-body, .popup-content").addClass("active");
 
@@ -151,31 +154,8 @@ $(() => {
     $(".close, .popup-body").on("click", function () {
       $(".popup-body, .popup-content").removeClass("active");
     });
-
   });
 
-  // ==================================================
-  // ================ modal handling ==================
-  // ==================================================
-  $(".open").on("click", function () {
-    $(".popup-body, .popup-content").addClass("active");
-
-    // console.log(results);
-    // console.log(results[0].title);
-
-    // clear the div before adding
-    $('.popup-content').empty()
-
-    let test=$('<h1>test stuff shows up</h1>')
-    $('.popup-content').append(test);
-
-    let button=$('<button class="close">Close</button>')
-    $('.popup-content').append(button);
-  });
-
-  $(".close, .popup-body").on("click", function () {
-    $(".popup-body, .popup-content").removeClass("active");
-  });
   // ==================================================
 
     // $('.bookList').on('click', (event) => {
@@ -195,25 +175,6 @@ $(() => {
       // let pageCount = data.items[i].volumeInfo.pageCount;
       // let year = (data.items[i].volumeInfo.publishedDate).slice(0,4);
 
-      // const clickedBook = $('moreInfo')
-      // .append($title)
-
-      // $('.moreInfo').toggle()
-    // })
-
-    // $('#close').on('click', () => {
-      // $('.modal').hide()
-      // $('.moreInfo').empty()
-    // })
-
-
-
-
-
-
-    // }  // end clicked event
-
-    // $('form').trigger('reset');
   });  // modal end brackets
   // });
 
