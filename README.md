@@ -1,11 +1,11 @@
-#castlerockreview
+# castlerockreview
 
 ![App Screenshot](https://i.imgur.com/Ei6Mm7Y.jpg)
 Format: [Alt Text](url)
 
-##Personal Git Repo:  ** caroleatierney.github.io **
+## Personal Git Repo:  ** caroleatierney.github.io **
 
-##Link to Castle Rock Review app:  *https://caroleatierney.github.io/castlerockreview/*
+## Link to Castle Rock Review app:  *https://caroleatierney.github.io/castlerockreview/*
 
 The app I created uses the following technologies:
   HTML
@@ -14,7 +14,7 @@ The app I created uses the following technologies:
   JavaScript
   AJAX
 
-##Unsolved problems:  *resolved post course*
+## Unsolved problems:  *resolved post course*
   - [x] Cannot get the JQuery remove statement to work, so the list keeps building onto itself
   - [x] Cannot get my images folder up to github so they are not displaying.
   - [x] some CSS formatting
