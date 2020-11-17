@@ -23,6 +23,7 @@ html, body {
   flex-direction: column;
   align-content: center;
   height: 100%;
+  overflow: hidden;
 }
 
 @media (min-width: 600px) {
@@ -51,7 +52,7 @@ html, body {
   padding: 1.5%;
   color: red;
   text-align: center;
-  font-size: 200px;
+  font-size: 300px;
   font-family: 'Creepster', cursive;
 }
 
@@ -157,30 +158,35 @@ form {
 
 /* ======================================= */
 /* book modal handling referenced pair.com */
+/* ======================================= */
 .popup-content {
   visibility: hidden;
 }
 
 .popup-content.active {
   visibility: visible;
-  z-index: initial;
 }
 
 .popup-body {
-
- position: fixed;
- top: 16%;
+ font-family: 'Xanh Mono', monospace;
  visibility: hidden;
- background: grey;
- color: white;
- border: 3px solid #666666;
- width: 50%;
- height: 50%;
- left: 25%;
+ position: fixed;
+ display: flex;
+ flex-direction: column;
+ top: 20%;
+ background-color: SeaShell;
+ color: black;
+ border: 20px solid black;
+ border-radius: 75px;
+ width: auto;
+ height: 60%;
+ overflow: auto;
+ left: 10%;
+ right: 10%;
  text-align: center;
  font-size: 50px;
  display: inline-block;
- vertical-align: middle;
+ padding: 150px;
 }
 
 .popup-body.active {
@@ -189,10 +195,11 @@ form {
 }
 
 .close {
-  background-color: green;
-  width: 300px;
-  height: 300px;
-  font-size: 100px;
+  background-color: black;
+  color: whitesmoke;
+  width: 200px;
+  height: 100px;
+  font-size: 50px;
 }
 
 /* ======================================= */

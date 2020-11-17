@@ -1,7 +1,11 @@
 // Google Books API Key - Use key=API_KEY parameter
 let apiKey = "AIzaSyBAZFHPTcUSvMx_Gx5Cd5tcQLP2c72htwA";
 let author="Stephen King";
-let urlPath = "https://www.googleapis.com/books/v1/volumes?q=inauthor:Stephen King&key=AIzaSyB AZFHPTcUSvMx_Gx5Cd5tcQLP2c72htwA";
+
+let urlPath = "https://www.googleapis.com/books/v1/volumes?q=inauthor:Stephen%20King&maxResults=40&key=AIzaSyB AZFHPTcUSvMx_Gx5Cd5tcQLP2c72htwA";
+
+// let urlPath = "https://www.googleapis.com/books/v1/volumes?q=inauthor:Stephen King&key=AIzaSyB AZFHPTcUSvMx_Gx5Cd5tcQLP2c72htwA";
+
 let queryData=('$.query-data');
 
 // create a results query of books
@@ -26,7 +30,7 @@ $(() => {
     Stype: "GET",
     dataType: 'json',
     data: {
-      "$limit": 100
+      "$limit": 500
     }
   }).done(function(data) {
     // alert causing issues
@@ -65,27 +69,25 @@ $(() => {
         $title.addClass('title');
 
         let title = data.items[i].volumeInfo.title;
-        let thumbnail = data.items[i].volumeInfo.imageLinks.thumbnail;
-        let description = data.items[i].volumeInfo.categories.description;
-        let fanRating = data.items[i].volumeInfo.averageRating;
-        let maturityRating = data.items[i].volumeInfo.maturityRating;
+
+        // handle mising imageLinks
+        if (typeof data.items[i].volumeInfo.imageLinks !== "undefined") {
+          thumbnail = data.items[i].volumeInfo.imageLinks.smallThumbnail;
+        } else {
+          let thumbnail = "https://i.imgur.com/8KecYYW.png"
+        }
+
+        let description = data.items[i].volumeInfo.description;
         let pageCount = data.items[i].volumeInfo.pageCount;
+        let maturityRating = data.items[i].volumeInfo.maturityRating;
+        let fanRating = data.items[i].volumeInfo.averageRating;
 
         // pull year out of published date
         let year = (data.items[i].volumeInfo.publishedDate).slice(0,4);
 
         kingBook = new Book(title, thumbnail, description, pageCount, maturityRating, fanRating, year)
 
-        // *** can I access kingBook array later?
-        // *** why am I not getting more books?
-        // *** why is there so much in line 86
         results.push(kingBook);
-
-        // console.log(results);
-        // console.log(results[0]);
-        // console.log(query.data);
-        // console.log(data.items[i].volumeInfo.imageLinks.thumbnail);
-        // console.log(data.items[i].volumeInfo.description);
 
       }; // end if King
     };  // end for
@@ -95,6 +97,7 @@ $(() => {
     // clear the div before adding
      $('.query-data').empty()
 
+     // ============ title undefined ============ //
      console.log(results);
 
     // sort results: referenced https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
@@ -119,12 +122,9 @@ $(() => {
       const bookList = $(`<div class="bookList" id='${i}'>`);
 
       title=results[i].title;
-      fanRating=results[i].fanRating;
-      year=results[i].year;
       thumbnail=results[i].thumbnail;
-      description = results[i].description;
 
-      bookImage=$(`<img class='open book'>`).attr('src', thumbnail);
+      bookImage=$(`<img class='open book' id='${i}'>`).attr('src', thumbnail);
 
       // append booklist div to query-data container
       bookList.append(title);
@@ -135,17 +135,34 @@ $(() => {
     // ==================================================
     // ================ modal handling ==================
     // ==================================================
-    $(".open").on("click", function () {
-      $(".popup-body, .popup-content").addClass("active");
+      $('.open').on('click', (event) => {
+        const bookId = $(event.currentTarget).attr('id')
 
-      // console.log(results);
-      // console.log(results[0].title);
+      $(".popup-body, .popup-content").addClass("active");
 
       // clear the div before adding
       $('.popup-content').empty()
 
-      let test=$('<h1>test stuff shows up</h1>')
-      $('.popup-content').append(test);
+      let title = $(`<h1>${results[bookId].title}</h1>`)
+      $('.popup-content').append(title);
+
+      let fanRating = $(`<h3>Fan Rating: ${results[bookId].fanRating}</h3>`)
+      $('.popup-content').append(fanRating);
+
+      let year = $(`<h3>Year: ${results[bookId].year}</h3>`)
+      $('.popup-content').append(year);
+
+      let maturityRating = $(`<h3>Maturity Rating: ${results[bookId].maturityRating}</h3>`)
+      $('.popup-content').append(maturityRating);
+
+      let pageCount = $(`<h3>Page Count: ${results[bookId].pageCount}</h3>`)
+      $('.popup-content').append(pageCount);
+
+      let bookImage = $('<img>').attr('src', results[bookId].thumbnail);
+      $('.popup-content').append(bookImage);
+
+      let description = $(`<h3>${results[bookId].description}</h3>`)
+      $('.popup-content').append(description);
 
       let button=$('<button class="close">Close</button>')
       $('.popup-content').append(button);
@@ -156,27 +173,7 @@ $(() => {
     });
   });
 
-  // ==================================================
-
-    // $('.bookList').on('click', (event) => {
-      // const bookListId = $(event.currentTarget).attr('id')
-
-      // get info from array by id #
-
-      console.log(results);
-
-      // let $titleName = results[0].title;
-      // let $title = $(`<h2>${titleName}</h2>`)
-
-      // let thumbnail = data.items[i].volumeInfo.imageLinks.thumbnail;
-      // let description = data.items[i].volumeInfo.categories.description;
-      // let fanRating = data.items[i].volumeInfo.averageRating;
-      // let maturityRating = data.items[i].volumeInfo.maturityRating;
-      // let pageCount = data.items[i].volumeInfo.pageCount;
-      // let year = (data.items[i].volumeInfo.publishedDate).slice(0,4);
-
   });  // modal end brackets
-  // });
 
   // ================= Carousel ===================
 
@@ -248,3 +245,12 @@ $(() => {
 // console.log("next clicked");
 // console.log("prev clicked");
 // console.log(".query-data");
+
+
+// console.log(results);
+// console.log(results[0]);
+// console.log(query.data);
+// console.log(data.items[i].volumeInfo.imageLinks.thumbnail);
+// console.log(data.items[i].volumeInfo.description);
+// console.log(kingBook);
+// console.log(description);
