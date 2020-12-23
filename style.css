@@ -1,7 +1,7 @@
 /* used % to make responsive */
 
 * {
-  border: 1px solid gold;
+  /* border: 1px solid gold; */
 }
 
 html, body {
@@ -53,15 +53,11 @@ html, body {
   padding: 1.5%;
   color: red;
   text-align: center;
-  /* font-size: 300px; */
   font-size: 5vw;
   font-family: 'Creepster', cursive;
 }
 
 /* ===== carousel ====== */
-/* watched carousel video */
-/* didn't try to copy but the code is minimal and it is hard to do it any other way then she showed */
-
 .carousel-container {
   display: flex;
   justify-content: center;
@@ -120,7 +116,6 @@ html, body {
   color: red;
   margin-left: 5%;
   margin-right: 5%;
-  /* font-size: 100px; */
   font-size: 1vw;
 }
 
@@ -150,18 +145,15 @@ form {
   flex-wrap: wrap;
   justify-content: space-evenly;
   color: white;
-  font-size: 80px;
+  font-size: 1vw;
   width: 500px;
   margin: 15px;
+  padding-top: 10%;
   padding-left: 10px;
   padding-right: 10px;
   text-align: center;
-  /* border: 5px solid white; */
 }
 
-/* ======================================= */
-/* book modal handling referenced pair.com */
-/* ======================================= */
 .popup-content {
   visibility: hidden;
 }
@@ -178,18 +170,17 @@ form {
  flex-direction: column;
  top: 20%;
  background-color: SeaShell;
+ font-size: .8vw;
  color: black;
  border: 20px solid black;
  border-radius: 75px;
  width: auto;
- /* height: 60%; */
  overflow: auto;
  left: 10%;
  right: 10%;
  text-align: center;
- /* font-size: 50px; */
  display: inline-block;
- padding: 150px;
+ padding: 100px;
 }
 
 .popup-body.active {
@@ -210,6 +201,8 @@ form {
 img {
   width: 500px;
   height: 800px;
+  /* width: 100%; */
+  /* height: 100%; */
 }
 
 /* ===== footer container ====== */
@@ -223,5 +216,6 @@ img {
 
 .footer > img {
   height: auto;
+  font-size: 1vw;
   width: 100;
 }
