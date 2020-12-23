@@ -17,7 +17,7 @@ html, body {
 
 /* ========= main container =========== */
 .main-container {
-  justify-content: space-around;
+  justify-content: center space-around;
   padding: 2%;
   background-color: black
   display: flex;
@@ -160,25 +160,25 @@ form {
 }
 
 .popup-body {
- font-family: 'Xanh Mono', monospace;
- visibility: hidden;
- position: fixed;
- display: flex;
- flex-direction: column;
- top: 15%;
- background-color: SeaShell;
- font-size: .8vw;
- color: black;
- border: 5px solid black;
- border-radius: 5%;
- width: 65%;
- height: 60%;
- overflow: auto;
- left: 10%;
- right: 10%;
- text-align: center;
- display: inline-block;
- padding: 10px;
+  font-family: 'Xanh Mono', monospace;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: SeaShell;
+  font-size: .8vw;
+  color: black;
+  border: 5px solid black;
+  border-radius: 5%;
+  overflow: auto;
+  text-align: center;
+  display: inline-block;
+  padding: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  margin-left: -25%;
+  margin-top: -25%;
 }
 
 .popup-body.active {
@@ -189,9 +189,9 @@ form {
 .close {
   background-color: black;
   color: whitesmoke;
-  width: 30px;
-  height: 15px;
-  font-size: 5px;
+  width: 10%;
+  height: 5%;
+  font-size: 1vw;
   text-align: center;
 }
 
