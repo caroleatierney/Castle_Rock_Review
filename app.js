@@ -124,7 +124,7 @@ $(() => {
       title=results[i].title;
       thumbnail=results[i].thumbnail;
 
-      bookImage=$(`<img class='open book' id='${i}'>`).attr('src', thumbnail);
+      bookImage=$(`<img class='open book thumb' id='${i}'>`).attr('src', thumbnail);
 
       // append booklist div to query-data container
       bookList.append(title);
