@@ -125,14 +125,17 @@ form {
   justify-content: center;
 }
 
-/* .query-data > img { */
-.open.book {
-  width: 50%;
-  height: 80%;
+.book {
+  height: 90%;
+  width: 90%;
+  border-width: thick;
+  border: 2px solid #green;
 }
 
 /* this div is defined in the app and appended to the query-data folder */
 .bookList {
+  height: 80%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -145,6 +148,8 @@ form {
   text-align: center;
   align-content: center;
 }
+
+/* ===== pop-up data ====== */
 
 .popup-content {
   visibility: hidden;
