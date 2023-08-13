@@ -50,3 +50,6 @@ Lost a lot of changes with something I did in Git!
 - [x] cleaned up arrow buttons
 - [x] used modals to display book info-first time using modals!
 - [x] removed repository from github and re-created deploying to GitHub Pages
+- [x] 8/13/2023 changed buttons to red
+- [x] 8/13/2023 added bigger bottom margin for button container
+- [x] 8/13/2023 added logic to query in case author key does not exist
