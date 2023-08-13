@@ -56,40 +56,45 @@ $(() => {
       //  loop through results returned
       for (var i = 0; i < data.items.length; i++) {
 
-        //  ** create a button with this info so they can click on it and get an image from API
-        //  ** add sort and date functionality
-        if (data.items[i].volumeInfo.authors[0] === 'Stephen King') {
+        // verify the author key exists in the json object
+        var authorKey = 'authors' in data.items[i].volumeInfo && data.items[i].volumeInfo.authors[0] || 'There is no Author Key'
+        if (authorKey !== "There is no Author Key") {
+          //  ** create a button with this info so they can click on it and get an image from API
+          //  ** add sort and date functionality
 
-        // create a <p> of title
-        let $title = $('<p>');
-        $title.text(data.items[i].volumeInfo.title);
+          if (data.items[i].volumeInfo.authors[0] === 'Stephen King') {
 
-        // add an ID of isbn to <p> in case need to get more info on book
-        $title.attr('id', data.items[i].volumeInfo.industryIdentifiers[0].identifier)
-        $title.addClass('title');
+          // create a <p> of title
+          let $title = $('<p>');
+          $title.text(data.items[i].volumeInfo.title);
 
-        let title = data.items[i].volumeInfo.title;
+          // add an ID of isbn to <p> in case need to get more info on book
+          $title.attr('id', data.items[i].volumeInfo.industryIdentifiers[0].identifier)
+          $title.addClass('title');
 
-        // handle mising imageLinks
-        if (typeof data.items[i].volumeInfo.imageLinks !== "undefined") {
-          thumbnail = data.items[i].volumeInfo.imageLinks.smallThumbnail;
-        } else {
-          let thumbnail = "https://i.imgur.com/8KecYYW.png"
-        }
+          let title = data.items[i].volumeInfo.title;
 
-        let description = data.items[i].volumeInfo.description;
-        let pageCount = data.items[i].volumeInfo.pageCount;
-        let maturityRating = data.items[i].volumeInfo.maturityRating;
-        let fanRating = data.items[i].volumeInfo.averageRating;
+          // handle missing imageLinks
+          if (typeof data.items[i].volumeInfo.imageLinks !== "undefined") {
+            thumbnail = data.items[i].volumeInfo.imageLinks.smallThumbnail;
+          } else {
+            let thumbnail = "https://i.imgur.com/8KecYYW.png"
+          }
 
-        // pull year out of published date
-        let year = (data.items[i].volumeInfo.publishedDate).slice(0,4);
+          let description = data.items[i].volumeInfo.description;
+          let pageCount = data.items[i].volumeInfo.pageCount;
+          let maturityRating = data.items[i].volumeInfo.maturityRating;
+          let fanRating = data.items[i].volumeInfo.averageRating;
 
-        kingBook = new Book(title, thumbnail, description, pageCount, maturityRating, fanRating, year)
+          // pull year out of published date
+          let year = (data.items[i].volumeInfo.publishedDate).slice(0,4);
 
-        results.push(kingBook);
+          kingBook = new Book(title, thumbnail, description, pageCount, maturityRating, fanRating, year)
 
-      }; // end if King
+          results.push(kingBook);
+
+        }; // end if King
+      }; // end if author key exists
     };  // end for
 
     // ========== sort & display results based on button chosen ===========
