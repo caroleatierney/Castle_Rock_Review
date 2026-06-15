@@ -1,0 +1,18 @@
+{
+  "name": "castle-rock-review",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@rolldown/binding-darwin-x64": "^1.0.3",
+    "vite": "^8.0.12"
+  },
+  "dependencies": {
+    "jquery": "^4.0.0"
+  }
+}

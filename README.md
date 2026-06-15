@@ -54,20 +54,16 @@ Lost a lot of changes with something I did in Git!
 - [x] 8/13/2023 added bigger bottom margin for button container
 - [x] 8/13/2023 added logic to query in case author key does not exist
 
+==============================================================================================================\
+
 To do: 6/2026
 
+Review entire app to figure it out
+
 .env file
-how come the click on book is not doing anything?
-
-
-
-        <div class="popup-body">
-          <div class="popup-content">
-          </div>
-        </div>
 
 Fix the size and blurrness of the books
 
-The list for the books by button does display the book
+The scrollable list for the books by button does display the book
 
 Any need to keep appbad?
