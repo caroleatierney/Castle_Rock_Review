@@ -33,7 +33,7 @@ class Book {
 $(() => {
   $.ajax({
     url: urlPath,
-    Stype: "GET",
+    type: "GET",
     dataType: "json",
     data: {
       $limit: 500,
@@ -51,55 +51,43 @@ $(() => {
       results = results.slice(results.length);
 
       // display book objects
-      // console.log(results);
+      console.log(results);
 
       // grab the query category ID chosen and save in query
       let query = $(event.target).attr("id");
 
       // display what comes back from API //
-      // console.log(data.items);
+      console.log(data.items);
 
       //  loop through results returned
       for (var i = 0; i < data.items.length; i++) {
+        const volumeInfo = data.items[i].volumeInfo;
+
         // verify the author key exists in the json object
-        var authorKey =
-          ("authors" in data.items[i].volumeInfo &&
-            data.items[i].volumeInfo.authors[0]) ||
-          "There is no Author Key";
-        if (authorKey !== "There is no Author Key") {
-          //  ** create a button with this info so they can click on it and get an image from API
-          //  ** add sort and date functionality
+        if (volumeInfo.authors && volumeInfo.authors.length > 0) {
+          // Use .includes() to match "Stephen King" even if there are co-authors
+          if (volumeInfo.authors[0].includes("Stephen King")) {
+            let title = volumeInfo.title;
 
-          if (data.items[i].volumeInfo.authors[0] === "Stephen King") {
-            // create a <p> of title
-            let $title = $("<p>");
-            $title.text(data.items[i].volumeInfo.title);
-
-            // add an ID of isbn to <p> in case need to get more info on book
-            $title.attr(
-              "id",
-              data.items[i].volumeInfo.industryIdentifiers[0].identifier,
-            );
-            $title.addClass("title");
-
-            let title = data.items[i].volumeInfo.title;
-
-            // handle missing imageLinks
-            if (typeof data.items[i].volumeInfo.imageLinks !== "undefined") {
-              thumbnail = data.items[i].volumeInfo.imageLinks.smallThumbnail;
-            } else {
-              let thumbnail = "https://i.imgur.com/8KecYYW.png";
+            // Fix thumbnail scoping: default to fallback, override if exists
+            let thumbnail = "https://i.imgur.com/8KecYYW.png";
+            if (volumeInfo.imageLinks && volumeInfo.imageLinks.smallThumbnail) {
+              thumbnail = volumeInfo.imageLinks.smallThumbnail;
             }
 
-            let description = data.items[i].volumeInfo.description;
-            let pageCount = data.items[i].volumeInfo.pageCount;
-            let maturityRating = data.items[i].volumeInfo.maturityRating;
-            let fanRating = data.items[i].volumeInfo.averageRating;
+            let description =
+              volumeInfo.description || "No description available.";
+            let pageCount = volumeInfo.pageCount || 0;
+            let maturityRating = volumeInfo.maturityRating || "NOT_AVAILABLE";
+            let fanRating = volumeInfo.averageRating || "N/A";
 
-            // pull year out of published date
-            let year = data.items[i].volumeInfo.publishedDate.slice(0, 4);
+            // Pull year out safely (handles cases where publishedDate is missing or short)
+            let year = volumeInfo.publishedDate
+              ? volumeInfo.publishedDate.slice(0, 4)
+              : "N/A";
 
-            kingBook = new Book(
+            // Instantiate your book object safely using block-scoped variables
+            const kingBook = new Book(
               title,
               thumbnail,
               description,
@@ -113,7 +101,6 @@ $(() => {
           } // end if King
         } // end if author key exists
       } // end for
-
       // ========== sort & display results based on button chosen ===========
 
       // clear the div before adding
@@ -143,10 +130,10 @@ $(() => {
       for (var i = 0; i < results.length; i++) {
         const bookList = $(`<div class="bookList" id='${i}'>`);
 
-        title = results[i].title;
-        thumbnail = results[i].thumbnail;
+        const title = results[i].title;
+        const thumbnail = results[i].thumbnail;
 
-        bookImage = $(`<img class='open book' id='${i}'>`).attr(
+        const bookImage = $(`<img class='open book' id='${i}'>`).attr(
           "src",
           thumbnail,
         );
